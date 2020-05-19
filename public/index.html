@@ -13,5 +13,16 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
+    <script>
+      // 1.获取html的可见宽度
+      var htmlwidth = document.documentElement.clientWidth || document.body.clientWidth;
+      // 2.获取页面的html元素
+      var html = document.documentElement
+      // 3.动态改变html的字体大小
+      html.style.fontSize = htmlwidth/20 + 'px';
+      console.log(html.style.fontSize)
+
+    </script>
   </body>
 </html>
