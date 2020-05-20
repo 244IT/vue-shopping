@@ -1,5 +1,6 @@
 <template>
   <div>
+      <!-- search content -->
      <div class="search-content">
        <van-row>
         <van-col span="3">
@@ -13,26 +14,47 @@
         </van-col>
       </van-row>
      </div>
+     <!-- swiper content -->
      <div class="swiper-content">
        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="(item, index) in imgUrl" :key="index">
-          <img :src="item" class="swiper-img">  
+        <van-swipe-item v-for="(item, index) in bannerPicArray" :key="index">
+          <img v-lazy="item.imageUrl" class="swiper-img">  
         </van-swipe-item>
       </van-swipe>
+     </div>
+     <!-- category content -->
+     <div class="category-content">
+       <div class="category-item" v-for="(item, index) in this.category"  :key="index">
+         <img v-lazy="item.image">
+         <span>{{item.mallCategoryName}}</span>
+       </div>
      </div>
   </div>
 </template>
 
 <script>
+  import axios from "axios"
   export default {
     data() {
       return {
-        imgUrl: [
-          "http://admin.chenhaohui.cn/img/haizei01.jpg",
-          "http://admin.chenhaohui.cn/img/haizei02.jpg",
-          "http://admin.chenhaohui.cn/img/haizei03.jpg"
-        ]
+        bannerPicArray:[
+            {imageUrl:'http://admin.chenhaohui.cn/img/haizei01.jpg'},
+            {imageUrl:'http://admin.chenhaohui.cn/img/haizei01.jpg'},
+            {imageUrl:'http://admin.chenhaohui.cn/img/haizei03.jpg'},
+        ],
+        category: []
       }
+    },
+    created() {
+      axios({
+        url: "https://www.easy-mock.com/mock/5ec52746e0e3c81a0943e149/smileVue/index",
+        method: "get"
+      })
+      .then(res => {
+        console.log(res);
+        this.category = res.data.data.category;
+        console.log(this.category);
+      })
     },
   }
 </script>
@@ -69,6 +91,24 @@
   }
   .swiper-img{
     width: 100%;
-    height: 12rem;
+    height: 10rem;
+  }
+
+  /* 商品导航 */
+  .category-content{
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: #FFF;
+    margin: .3rem .3rem .3rem .3rem;
+    border-radius: .3rem;
+      font-size:14px;
+  }
+  .category-item{
+    padding: .3rem;
+    font-size: 12px;
+    text-align: center;
+  }
+  .category-item img{
+    width: 80%;
   }
 </style>
